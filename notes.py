@@ -91,7 +91,8 @@ df['price'] = df['price'].astype('int')
 df['length'] = df['length'] / df['length'].max()
 
 # Min-Max
-df['length'] = (df['length'] - df['length'].min()) / (df['length'].max()-df['length'].min())
+df['length'] = (df['length'] - df['length'].min()) / \
+    (df['length'].max()-df['length'].min())
 
 # Z-score
 df['length'] = (df['length'] - df['length'].mean())/df['length'].std()
@@ -107,7 +108,8 @@ Sometimes this can improve the accuracy of the data.
 '''
 bins = np.linspace(min(df['price']), max(df['price']), 4)
 group_names = ['Low', 'Medium', 'High']
-df['price-binned'] = pd.cut(df['price'], bins, labels = group_names, include_lowest = True)
+df['price-binned'] = pd.cut(df['price'], bins,
+                            labels=group_names, include_lowest=True)
 
 ''' Categorical -> Numeric
 Solution: Add dummy variables for each unique category
