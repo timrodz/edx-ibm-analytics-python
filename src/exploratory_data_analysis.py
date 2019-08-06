@@ -3,10 +3,8 @@ EXPLORATORY DATA ANALYSIS
 """
 import pandas as pd
 import numpy as np
-import util
+import src.util as util
 
-def lol():
-    pass
 df = util.create_df()
 """ Overview
 

@@ -1,6 +1,9 @@
+"""
+BINNING
+"""
 import pandas as pd
 import numpy as np
-import util
+import src.util as util
 
 df = util.create_df()
 """ Binning
