@@ -1,11 +1,12 @@
 import pandas as pd
+import numpy as np
 
 
 def create_df():
     """ Generates the DataFrame for the course
 
      Returns:
-         DataFrame: Contains information about vehicles
+             DataFrame: Contains information about vehicles
      """
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/autos/imports-85.data'
 
@@ -38,9 +39,50 @@ def create_df():
                     'price'
                     ]
 
-    data_frame = pd.read_csv(url, header=None)
-    data_frame.columns = column_names
-    return data_frame
+    df = pd.read_csv(url, header=None)
+    df.columns = column_names
+
+    df.replace('?', np.nan, inplace=True)
+    count_missing_data(df)
+
+    # Fill types
+    replace_with_mean(df['bore'], 'float')
+    replace_with_mean(df['stroke'], 'float')
+    replace_with_mean(df['normalized-losses'], 'float')
+    replace_with_mean(df['price'], 'float')
+    replace_with_mean(df['peak-rpm'], 'float')
+
+    df[['bore', 'stroke']] = df[['bore', 'stroke']].astype('float')
+    df[['normalized-losses']] = df[['normalized-losses']].astype('int')
+    df[['price']] = df[['price']].astype('float')
+    df[['peak-rpm']] = df[['peak-rpm']].astype('float')
+
+    return df
+
+
+def count_missing_data(df: pd.DataFrame):
+    """
+    Displays all missing data for a given DataFrame
+    """
+    missing_data = df.isnull()
+    for column in missing_data:
+        missing_values = (missing_data[column] == True).sum()
+        
+        if missing_values == 0:
+            continue
+        
+        print('Column: {} | Missing values count: ({})'.format(
+            column,
+            missing_values
+        )
+        )
+    return missing_data
+
+
+def replace_with_mean(column: pd.Series, type_to_check: str):
+    mean = column.astype(type_to_check).mean(axis=0)
+    column.fillna(mean, inplace=True)
+    column.astype(type_to_check)
 
 
 example_df = create_df()
