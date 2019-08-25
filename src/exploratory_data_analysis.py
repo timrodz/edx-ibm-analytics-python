@@ -57,7 +57,8 @@ def group_by():
     Can be done on single or multiple variables.
     """
     df_test = df[['drive-wheels', 'body-style', 'price']]
-    df_grp = df_test.groupby(['drive-wheels', 'body-style'], as_index=False).mean()
+    df_grp = df_test.groupby(['drive-wheels', 'body-style'],
+                             as_index=False).mean()
     
     """
     Pivot table & Heatmaps
@@ -75,14 +76,18 @@ def analysis_of_variance():
     """
     ANOVA
     
-    Why? To find the correlation between different groups of a categorical variable
+    Why? To find the correlation between different
+    groups of a categorical variable
     
     What do we get from ANOVA?
-    F-test score: variation between sample group means divided by variation within sample group
+    F-test score: variation between sample group means divided
+        by variation within sample group
     P-value: confidence degree
     
-    Small F implies poor correlation between the variable categories and the target variable.
-    Large F implies strong correlation
+    Notes:
+    - Small F implies poor correlation between the variable
+        categories and the target variable.
+    - Large F implies strong correlation
     """
     df_anova = df[['make', 'price']]
     grouped_anova = df_anova.groupby(['make'])
@@ -94,7 +99,7 @@ def analysis_of_variance():
     print(anova_results_2)
 
 
-def correlation():
+def correlation_simple():
     """
     Statistical metric for measuring interdependency of 2 variables
     
@@ -109,8 +114,49 @@ def correlation():
     """
     # Positive Linear Relationship
     sns.regplot(x='engine-size', y='price', data=df)
-    plt.ylim(0,)
+    plt.ylim(0, )
+    plt.show()
+    
+    plt.clf()
+    
+    # Negative Linear Relationship
+    sns.regplot('highway-mpg', 'price', data=df)
+    plt.ylim(0, )
+    plt.show()
+    
+    plt.clf()
+    
+    # Weak Linear Relationship
+    sns.regplot('peak-rpm', 'price', data=df)
+    plt.ylim(0, )
+    plt.show()
+
+
+def correlation_statistics():
+    """
+    1. Pearson correlation
+        Correlation Coefficient — Explanation:
+            - Close to +1: Large positive relationship
+            - Close to -1: Large negative relationship
+            - Close to 0: No relationship
+            
+        P Value — Strength of result certainty
+            - <0.001: Strong certainty
+            - <0.05: Moderate certainty
+            - <0.1: Weak certainty
+            - >0.1: No certainty
+    
+    Notes:
+        https://en.wikipedia.org/wiki/Correlation_and_dependence
+        - We can say there's a strong correlation when:
+            1. Correlation Coefficient is close to 1 or -1
+            2. P value is less than 0.001
+        - If the correlation coefficient is NaN?
+    """
+    df['horsepower'] = df['horsepower'].astype(float)
+    pearson_coef, p_value = stats.pearsonr(df['horsepower'], df['price'])
+    print('Coef: {} | P value: {}'.format(pearson_coef, p_value))
 
 
 if __name__ == "__main__":
-    correlation()
+    correlation_statistics()
