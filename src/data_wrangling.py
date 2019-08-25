@@ -64,8 +64,8 @@ gas     0
 diesel  1
 
 1) One-hot encoding
-	pandas.get_dummies()
-	
+  pandas.get_dummies()
+  
 -- Indicator Variable
 An indicator variable (or dummy variable) is a numerical variable used to
 label categories. They are called 'dummies' because the numbers themselves
