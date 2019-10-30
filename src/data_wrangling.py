@@ -9,66 +9,60 @@ import numpy as np
 import src.util as util
 
 df = util.create_df()
-"""
-Operations
-"""
-# Show the shape of the dataset
-df.shape()
 
-# Show the data types for the data frame
-df.dtypes()
 
-# Highlights last 5 values and shows the data type
-df['price'].tail()
+def basic_operations():
+    # Show the shape of the dataset
+    df.shape()
 
-# Converting a column's data type
-df['price'] = df['price'].astype(int)
+    # Show the data types for the data frame
+    df.dtypes()
 
-# Convert the column type to float/int if possible
-df['normalized-losses'] = df['normalized-losses'].astype('float')
+    # Highlights last 5 values and shows the data type
+    df['price'].tail()
 
-# Convert an entire entire column's values
-df['city-mpg'] = 235 / df['city-mpg']  # mpg -> L/100Km
+    # Converting a column's data type
+    df['price'] = df['price'].astype(int)
 
-# Rename columns
-df.rename(columns={'"highway-mpg"': 'highway-L/100km'}, inplace=True)
+    # Convert the column type to float/int if possible
+    df['normalized-losses'] = df['normalized-losses'].astype('float')
 
-""" Dealing with missing values
-1) Numerical values: replace these values with the mean
-2) Categorical values: use the most common entry
-3) Replace based on other functions
-4) Leave it as missing data
 
--- NOTES
-Whole columns should be dropped only if most entries in the column are empty.
-"""
-# Replace values with the mean
-mean = df['normalized-losses'].mean(skipna=True)
-df['normalized-losses'].fillna(mean, inplace=True)
+def missing_values():
+    """ Dealing with missing values
+    1) Numerical values: replace these values with the mean
+    2) Categorical values: use the most common entry
+    3) Replace based on other functions
+    4) Leave it as missing data
 
-# Remove NaN values in a string
-df.replace(['NaN', 'NaT', '?'], np.nan, inplace=True)
-df.dropna(subset=['price'], axis=0, how='all', inplace=True)
+    -- NOTES
+    Whole columns should be dropped only if most entries in the column are empty.
+    """
+    # Replace values with the mean
+    mean = df['normalized-losses'].mean(skipna=True)
+    df['normalized-losses'].fillna(mean, inplace=True)
 
-# Replace NaN values with 0 - The column must contain numerical values
-df.fillna(0, inplace=True)
+    # Remove NaN values in a string
+    df.replace(['NaN', 'NaT', '?'], np.nan, inplace=True)
+    df.dropna(subset=['price'], axis=0, how='all', inplace=True)
 
-""" Turning categorical variables into quantitative variables
-Solution: Add dummy variables for each unique category
-Assign 0 or 1 in each category
+    # Replace NaN values with 0 - The column must contain numerical values
+    df.fillna(0, inplace=True)
 
-e.g.
-fuel | column, type: object
---- Entries
-gas     0
-diesel  1
 
-1) One-hot encoding
-  pandas.get_dummies()
-  
--- Indicator Variable
-An indicator variable (or dummy variable) is a numerical variable used to
-label categories. They are called 'dummies' because the numbers themselves
-don't have inherent meaning
-"""
-pd.get_dummies(df['fuel'])
+def standardization():
+    """ Data standardization
+    Standardization is the process of transforming data into a common format 
+    which allows the researcher to make the meaningful comparison. 
+    """
+    # Convert an entire entire column's values
+    df['city-mpg'] = 235 / df['city-mpg']  # mpg -> L/100Km
+
+    # Rename columns
+    df.rename(columns={'"highway-mpg"': 'highway-L/100km'}, inplace=True)
+
+
+if __name__ == "__main__":
+    basic_operations()
+    missing_values()
+    standardization()

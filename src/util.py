@@ -9,54 +9,55 @@ def create_df():
              DataFrame: Contains information about vehicles
      """
     url = 'https://s3-api.us-geo.objectstorage.softlayer.net/cf-courses-data/CognitiveClass/DA0101EN/auto.csv'
-    
+
     # 'https://archive.ics.uci.edu/ml/machine-learning-databases/autos/imports-85.names'
-    column_names = ['symboling',
-                    'normalized-losses',
-                    'make',
-                    'fuel',
-                    'aspiration',
-                    'num-of-doors',
-                    'body-style',
-                    'drive-wheels',
-                    'engine-location',
-                    'wheel-base',
-                    'length',
-                    'width',
-                    'height',
-                    'curb-weight',
-                    'engine',
-                    'num-of-cylinders',
-                    'engine-size',
-                    'fuel-system',
-                    'bore',
-                    'stroke',
-                    'compression-ratio',
-                    'horsepower',
-                    'peak-rpm',
-                    'city-mpg',
-                    'highway-mpg',
-                    'price'
-                    ]
-    
+    column_names = [
+        'symboling',
+        'normalized-losses',
+        'make',
+        'fuel',
+        'aspiration',
+        'num-of-doors',
+        'body-style',
+        'drive-wheels',
+        'engine-location',
+        'wheel-base',
+        'length',
+        'width',
+        'height',
+        'curb-weight',
+        'engine',
+        'num-of-cylinders',
+        'engine-size',
+        'fuel-system',
+        'bore',
+        'stroke',
+        'compression-ratio',
+        'horsepower',
+        'peak-rpm',
+        'city-mpg',
+        'highway-mpg',
+        'price'
+    ]
+
     df = pd.read_csv(url, header=None)
     df.columns = column_names
-    
+
     df.replace('?', np.nan, inplace=True)
     count_missing_data(df)
-    
+
     # Fill types
-    replace_with_mean(df['bore'], 'float')
-    replace_with_mean(df['stroke'], 'float')
-    replace_with_mean(df['normalized-losses'], 'float')
-    replace_with_mean(df['price'], 'float')
-    replace_with_mean(df['peak-rpm'], 'float')
-    
+    replace_nan_with_mean(df['bore'], 'float')
+    replace_nan_with_mean(df['stroke'], 'float')
+    replace_nan_with_mean(df['normalized-losses'], 'float')
+    replace_nan_with_mean(df['price'], 'float')
+    replace_nan_with_mean(df['peak-rpm'], 'float')
+
     df[['bore', 'stroke']] = df[['bore', 'stroke']].astype('float')
     df[['normalized-losses']] = df[['normalized-losses']].astype('int')
     df[['price']] = df[['price']].astype('float')
     df[['peak-rpm']] = df[['peak-rpm']].astype('float')
-    
+
     return df
 
 
@@ -67,10 +68,10 @@ def count_missing_data(df: pd.DataFrame, show_missing=False):
     missing_data = df.isnull()
     for column in missing_data:
         missing_values = (missing_data[column] == True).sum()
-        
+
         if missing_values == 0:
             continue
-        
+
         if show_missing:
             print('Column: {} | Missing values count: ({})'.format(
                 column,
@@ -79,7 +80,7 @@ def count_missing_data(df: pd.DataFrame, show_missing=False):
     return missing_data
 
 
-def replace_with_mean(column, type_to_check: str):
+def replace_nan_with_mean(column, type_to_check: str):
     mean = column.astype(type_to_check).mean(axis=0)
     column.fillna(mean, inplace=True)
     column.astype(type_to_check)

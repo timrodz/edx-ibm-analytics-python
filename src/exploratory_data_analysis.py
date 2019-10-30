@@ -1,23 +1,21 @@
 """
 EXPLORATORY DATA ANALYSIS
+
+- Descriptive Statistics
+- GroupBy
+- ANOVA — Analysis of variance
+- Correlation
+- Statistical Correlation
 """
-import pandas as pd
-import numpy as np
-import seaborn as sns
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import seaborn as sns
 from scipy import stats
 
 import src.util as util
 
 df = util.create_df()
-""" Overview
-
-1) Descriptive Statistics
-2) GroupBy
-3) ANOVA — Analysis of variance
-4) Correlation
-5) Statistical Correlation
-"""
 
 
 def descriptive_statistics():
@@ -26,14 +24,14 @@ def descriptive_statistics():
     df.describe()
     # Summarize categorical data
     df['drive-wheels'].value_counts()
-    
+
     # Helps spot outliers in a data set
     sns.boxplot(x='drive-wheels', y='price', data=df)
     plt.show()
-    
+
     # Clear the current figure so it does not interfere with our new plot
     plt.clf()
-    
+
     # Scatter plot shows the relationship between two variables
     # Predictor/Independent variables on x-axis
     # Target/Dependent variables on y-axis
@@ -59,14 +57,14 @@ def group_by():
     df_test = df[['drive-wheels', 'body-style', 'price']]
     df_grp = df_test.groupby(['drive-wheels', 'body-style'],
                              as_index=False).mean()
-    
+
     """
     Pivot table & Heatmaps
     
     One variable displayed along the columns and the other variable displayed along the rows
     """
     df_pivot = df_grp.pivot(index='drive-wheels', columns='body-style')
-    
+
     plt.pcolor(df_pivot, cmap='RdBu')
     plt.colorbar()
     plt.show()
@@ -75,15 +73,15 @@ def group_by():
 def analysis_of_variance():
     """
     ANOVA
-    
+
     Why? To find the correlation between different
     groups of a categorical variable
-    
+
     What do we get from ANOVA?
     F-test score: variation between sample group means divided
         by variation within sample group
     P-value: confidence degree
-    
+
     Notes:
     - Small F implies poor correlation between the variable
         categories and the target variable.
@@ -102,13 +100,13 @@ def analysis_of_variance():
 def correlation_simple():
     """
     Statistical metric for measuring interdependency of 2 variables
-    
+
     Measures to what extent different variables are interdependent
-    
+
     Examples:
         Lung cancer -> Smoking
         Rain -> Umbrella
-    
+
     Correlation does not imply causation
     The umbrella didn't cause the rain, and the rain didn't cause the umbrella
     """
@@ -116,16 +114,16 @@ def correlation_simple():
     sns.regplot(x='engine-size', y='price', data=df)
     plt.ylim(0, )
     plt.show()
-    
+
     plt.clf()
-    
+
     # Negative Linear Relationship
     sns.regplot('highway-mpg', 'price', data=df)
     plt.ylim(0, )
     plt.show()
-    
+
     plt.clf()
-    
+
     # Weak Linear Relationship
     sns.regplot('peak-rpm', 'price', data=df)
     plt.ylim(0, )
@@ -139,13 +137,13 @@ def correlation_statistics():
             - Close to +1: Large positive relationship
             - Close to -1: Large negative relationship
             - Close to 0: No relationship
-            
+
         P Value — Strength of result certainty
             - <0.001: Strong certainty
             - <0.05: Moderate certainty
             - <0.1: Weak certainty
             - >0.1: No certainty
-    
+
     Notes:
         https://en.wikipedia.org/wiki/Correlation_and_dependence
         - We can say there's a strong correlation when:
@@ -159,4 +157,8 @@ def correlation_statistics():
 
 
 if __name__ == "__main__":
+    descriptive_statistics()
+    group_by()
+    analysis_of_variance()
+    correlation_simple()
     correlation_statistics()

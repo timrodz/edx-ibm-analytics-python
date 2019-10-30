@@ -13,3 +13,15 @@ Course link: [https://courses.edx.org/courses/course-v1:IBM+DA0101EN+3T2018/cour
 -   NumPy
 -   MatPlotLib
 -   Seaborn
+
+## Course content in files
+
+### Module 2 - Data Wrangling
+
+- `data_wrangling.py`
+- `data_normalization.py`
+- `binning.py`
+
+### Module 3 - Exploratory Data Analysis
+
+- `exploratory_data_analysis.py`
