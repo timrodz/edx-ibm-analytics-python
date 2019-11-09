@@ -12,8 +12,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 from scipy import stats
-
-import src.util as util
+from src import util
 
 df = util.create_df()
 

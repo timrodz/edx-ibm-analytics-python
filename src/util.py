@@ -86,16 +86,17 @@ def replace_nan_with_mean(column, type_to_check: str):
     column.astype(type_to_check)
 
 
-example_df = create_df()
-# Print head/tail
-example_df.head(5)
-example_df.tail(5)
+if __name__ == "__main__":
+    example_df = create_df()
+    # Print head/tail
+    example_df.head(5)
+    example_df.tail(5)
 
-# Save DataFrame as a csv
-# example_df.to_csv('file_path.csv')
+    # Save DataFrame as a csv
+    # example_df.to_csv('file_path.csv')
 
-# Provide a statistical summary of everything
-example_df.describe()
+    # Provide a statistical summary of everything
+    example_df.describe()
 
-# Include non-numerical objects
-example_df.describe(include='all')
+    # Include non-numerical objects
+    example_df.describe(include='all')
