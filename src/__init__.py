@@ -1,1 +1,1 @@
-from src import util
+import src.util

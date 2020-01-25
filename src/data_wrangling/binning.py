@@ -5,8 +5,9 @@ BINNING
 - Indicator Variable (Dummy)
 """
 import matplotlib.pyplot as plt
-import pandas as pd
 import numpy as np
+import pandas as pd
+
 from src import util
 
 
@@ -70,7 +71,7 @@ def dummies():
     df = pd.concat([df, dummy_var], axis=1)
 
     # drop original column "fuel-type" from "df"
-    df.drop("fuel-type", axis=1, inplace=True)
+    df.drop("fuel", axis=1, inplace=True)
 
 
 if __name__ == "__main__":

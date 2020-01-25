@@ -4,20 +4,22 @@ DATA WRANGLING
 - Handling missing values
 - Converting categorial data -> numerical
 """
-import pandas as pd
 import numpy as np
-from src import util
 
+from src import util
 
 df = util.create_df()
 
 
 def basic_operations():
     # Show the shape of the dataset
-    df.shape()
+    shape = df.shape
+
+    print(f'Shape: {shape}')
 
     # Show the data types for the data frame
-    df.dtypes()
+    types = df.dtypes
+    print(f'Types: {types}')
 
     # Highlights last 5 values and shows the data type
     df['price'].tail()

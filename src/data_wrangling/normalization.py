@@ -5,8 +5,6 @@ DATA NORMALIZATION
 - Min-Max
 - Z-score
 """
-import pandas as pd
-import numpy as np
 from src import util
 
 df = util.create_df()

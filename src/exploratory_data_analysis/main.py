@@ -8,16 +8,14 @@ EXPLORATORY DATA ANALYSIS
 - Statistical Correlation
 """
 import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
 import seaborn as sns
 from scipy import stats
-from src import util
 
-df = util.create_df()
+from src import util
 
 
 def descriptive_statistics():
+    df = util.create_df()
     # Descriptive Statistics
     # Generate various summary statistics, excluding NaN values
     df.describe()
@@ -32,8 +30,8 @@ def descriptive_statistics():
     plt.clf()
 
     # Scatter plot shows the relationship between two variables
-    # Predictor/Independent variables on x-axis
-    # Target/Dependent variables on y-axis
+    # PIV variables on x-axis
+    # TDV variables on y-axis
     y = df['engine-size']
     x = df['price']
     plt.scatter(x, y)
@@ -49,10 +47,13 @@ def group_by():
     """
     Group By
 
-    Used on categorical variables (size, price, etc.). Groups data into subsets according to the different categories of the variable.
+    Used on categorical variables (size, price, etc.). Groups data into subsets
+    according to the different categories of the variable.
 
     Can be done on single or multiple variables.
     """
+    df = util.create_df()
+
     df_test = df[['drive-wheels', 'body-style', 'price']]
     df_grp = df_test.groupby(['drive-wheels', 'body-style'],
                              as_index=False).mean()
@@ -60,7 +61,8 @@ def group_by():
     """
     Pivot table & Heatmaps
     
-    One variable displayed along the columns and the other variable displayed along the rows
+    One variable displayed along the columns and the other variable displayed along the 
+    rows
     """
     df_pivot = df_grp.pivot(index='drive-wheels', columns='body-style')
 
@@ -86,6 +88,8 @@ def analysis_of_variance():
         categories and the target variable.
     - Large F implies strong correlation
     """
+    df = util.create_df()
+
     df_anova = df[['make', 'price']]
     grouped_anova = df_anova.groupby(['make'])
     anova_results_1 = stats.f_oneway(grouped_anova.get_group('honda')['price'],
@@ -109,6 +113,8 @@ def correlation_simple():
     Correlation does not imply causation
     The umbrella didn't cause the rain, and the rain didn't cause the umbrella
     """
+    df = util.create_df()
+
     # Positive Linear Relationship
     sns.regplot(x='engine-size', y='price', data=df)
     plt.ylim(0, )
@@ -131,13 +137,13 @@ def correlation_simple():
 
 def correlation_statistics():
     """
-    1. Pearson correlation
-        Correlation Coefficient — Explanation:
+    Pearson correlation
+        - Correlation Coefficient. Explanation:
             - Close to +1: Large positive relationship
             - Close to -1: Large negative relationship
             - Close to 0: No relationship
 
-        P Value — Strength of result certainty
+        - P Value. Strength of result certainty:
             - <0.001: Strong certainty
             - <0.05: Moderate certainty
             - <0.1: Weak certainty
@@ -150,6 +156,8 @@ def correlation_statistics():
             2. P value is less than 0.001
         - If the correlation coefficient is NaN?
     """
+    df = util.create_df()
+
     df['horsepower'] = df['horsepower'].astype(float)
     pearson_coef, p_value = stats.pearsonr(df['horsepower'], df['price'])
     print('Coef: {} | P value: {}'.format(pearson_coef, p_value))

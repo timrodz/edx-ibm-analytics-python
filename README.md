@@ -1,6 +1,11 @@
 # Analyzing Data with Python
 
-Course link: [https://courses.edx.org/courses/course-v1:IBM+DA0101EN+3T2018/course/]
+Course link: [https://courses.edx.org/courses/course-v1:IBM+DA0101EN+3T2019/course/]
+
+## Terms
+
+- **PIV**: Predictor/Independent Variable (or Feature)
+- **TDV**: Target/Dependent Variable
 
 ## Environment
 
@@ -13,15 +18,3 @@ Course link: [https://courses.edx.org/courses/course-v1:IBM+DA0101EN+3T2018/cour
 -   NumPy
 -   MatPlotLib
 -   Seaborn
-
-## Course content in files
-
-### Module 2 - Data Wrangling
-
-- `data_wrangling.py`
-- `data_normalization.py`
-- `binning.py`
-
-### Module 3 - Exploratory Data Analysis
-
-- `exploratory_data_analysis.py`
