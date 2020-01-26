@@ -1,6 +1,6 @@
 # Analyzing Data with Python
 
-[Course link](https://www.edx.org/course/analyzing-data-with-python
+[Course link](https://www.edx.org/course/analyzing-data-with-python)
 
 ## Terms
 
