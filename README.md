@@ -1,6 +1,6 @@
 # Analyzing Data with Python
 
-Course link: [https://courses.edx.org/courses/course-v1:IBM+DA0101EN+3T2019/course/]
+[Course link](https://www.edx.org/course/analyzing-data-with-python
 
 ## Terms
 
@@ -9,12 +9,13 @@ Course link: [https://courses.edx.org/courses/course-v1:IBM+DA0101EN+3T2019/cour
 
 ## Environment
 
--   Python version: 3.7.1 (64 bit)
--   Anaconda
+-   Python 3.7.2 (64-bit)
+-   PyCharm 2019.3 Community Edition 
 
-### Libraries
+### Key Libraries
 
 -   Pandas
 -   NumPy
 -   MatPlotLib
 -   Seaborn
+-   scikit-learn
