@@ -46,17 +46,28 @@ def create_df():
     df.replace('?', np.nan, inplace=True)
     count_missing_data(df)
 
-    # Fill types
-    replace_nan_with_mean(df['bore'], 'float')
-    replace_nan_with_mean(df['stroke'], 'float')
-    replace_nan_with_mean(df['normalized-losses'], 'float')
-    replace_nan_with_mean(df['price'], 'float')
-    replace_nan_with_mean(df['peak-rpm'], 'float')
+    cols_to_convert = [
+        'symboling',
+        'bore',
+        'stroke',
+        'normalized-losses',
+        'horsepower',
+        'price',
+        'peak-rpm',
+        'wheel-base',
+        'length',
+        'width',
+        'height',
+        'curb-weight',
+        'engine-size',
+        'stroke',
+        'compression-ratio',
+    ]
 
-    df[['bore', 'stroke']] = df[['bore', 'stroke']].astype('float')
-    df[['normalized-losses']] = df[['normalized-losses']].astype('int')
-    df[['price']] = df[['price']].astype('float')
-    df[['peak-rpm']] = df[['peak-rpm']].astype('float')
+    for c in cols_to_convert:
+        replace_nan_with_mean(df[c])
+
+    df[cols_to_convert] = df[cols_to_convert].apply(pd.to_numeric)
 
     return df
 
@@ -80,20 +91,17 @@ def count_missing_data(df: pd.DataFrame, show_missing=False):
     return missing_data
 
 
-def replace_nan_with_mean(column, type_to_check: str):
+def replace_nan_with_mean(column, type_to_check: type = float):
     mean = column.astype(type_to_check).mean(axis=0)
     column.fillna(mean, inplace=True)
-    column.astype(type_to_check)
 
 
 if __name__ == "__main__":
     example_df = create_df()
+    
     # Print head/tail
     example_df.head(5)
     example_df.tail(5)
-
-    # Save DataFrame as a csv
-    # example_df.to_csv('file_path.csv')
 
     # Provide a statistical summary of everything
     example_df.describe()
