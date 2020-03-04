@@ -86,7 +86,6 @@ def multiple_linear_regression():
     """
     Will use 2+ PIVs to make 1 prediction (TDV)
     """
-
     df = util.create_df()
 
     x = df[['horsepower', 'curb-weight', 'engine-size', 'highway-mpg']]
@@ -96,7 +95,36 @@ def multiple_linear_regression():
 
     lmr.fit(x, y)
 
-    y_hat = lmr.predict(x)
+
+def polynomial_regression():
+    """
+    Special case of the general linear regression model
+    Useful for describing 'curvilinear' relationships: This is what you get by squaring or setting
+        higher-order terms of the predictor variables
+
+    The model can be:
+    - Quadratic (2nd order)
+    - Cubic (3rd order)
+    - Higher order (4th order +)
+
+    The degree of the regression can make a big difference if you pick the right value
+    .
+    """
+    import numpy as np
+    from sklearn.preprocessing import PolynomialFeatures
+    df = util.create_df()
+
+    x = df['horsepower']
+    y = df['curb-weight']
+
+    f = np.polyfit(x, y, 3)
+    p = np.poly1d(f)
+    print(p)
+
+    pr = PolynomialFeatures(degree=2, include_bias=False)
+    x_poly = pr.fit_transform(df[['horsepower', 'curb-weight']])
+
+    print(x_poly)
 
 
 def model_evaluation_using_visualization():
@@ -166,7 +194,28 @@ def model_evaluation_using_visualization():
     plt.show()
 
 
+def calculate_mean_squared_error():
+    """
+    As the MSE increases, the prediction will be less accurate.
+    """
+    from sklearn.metrics import mean_squared_error
+    df = util.create_df()
+
+    x = df[['horsepower', 'curb-weight', 'engine-size', 'highway-mpg']]
+    y = df['price']
+
+    lmr = linear_model.LinearRegression()
+
+    lmr.fit(x, y)
+
+    y_hat = lmr.predict(x)
+    mse = mean_squared_error(df['price'], y_hat)
+    print(mse)
+
+
 if __name__ == "__main__":
     # simple_linear_regression()
     # multiple_linear_regression()
-    model_evaluation_using_visualization()
+    # polynomial_regression()
+    # model_evaluation_using_visualization()
+    calculate_mean_squared_error()
