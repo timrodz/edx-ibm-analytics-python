@@ -10,7 +10,7 @@ MODEL DEVELOPMENT
 """
 import matplotlib.pyplot as plt
 from sklearn import linear_model
-
+import seaborn as sns
 from src import util
 
 """ Model/Estimator
@@ -72,10 +72,11 @@ def simple_linear_regression():
     print('Coefficient of determination: %.2f'
           % r2_score(y_test, y_predict))
 
-    # Plot outputs
+    width, height = 12, 10
+    plt.figure(figsize=(width, height))
     plt.scatter(x_test, y_test, color='black')
     plt.plot(x_test, y_predict, color='blue', linewidth=3)
-    plt.ylim(bottom=0)
+    plt.ylim(0,)
     plt.title('SLR model for predicting price')
     plt.xlabel('Miles Per Gallon')
     plt.ylabel('Price')
@@ -94,6 +95,20 @@ def multiple_linear_regression():
     lmr = linear_model.LinearRegression()
 
     lmr.fit(x, y)
+
+    y_hat = lmr.predict(x)
+
+    width, height = 12, 10
+    plt.figure(figsize=(width, height))
+
+    ax1 = sns.distplot(df['price'], hist=False, color="r", label="Actual Value")
+    sns.distplot(y_hat, hist=False, color="b", label="Fitted Values", ax=ax1)
+
+    plt.title('Actual vs Fitted Values for Price')
+    plt.xlabel('Price (in dollars)')
+    plt.ylabel('Proportion of Cars')
+
+    plt.show()
 
 
 def polynomial_regression():
@@ -214,8 +229,8 @@ def calculate_mean_squared_error():
 
 
 if __name__ == "__main__":
-    # simple_linear_regression()
-    # multiple_linear_regression()
+    simple_linear_regression()
+    multiple_linear_regression()
     # polynomial_regression()
     # model_evaluation_using_visualization()
-    calculate_mean_squared_error()
+    # calculate_mean_squared_error()
